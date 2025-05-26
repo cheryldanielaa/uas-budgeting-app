@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemExpenses"
+        android:icon="@drawable/baseline_add_card_24"
+        android:title="Expense Track" />
+    <item
+        android:id="@+id/itemBudgeting"
+        android:icon="@drawable/baseline_pie_chart_24"
+        android:title="Budgeting" />
+    <item
+        android:id="@+id/itemReport"
+        android:icon="@drawable/baseline_bar_chart_24"
+        android:title="Report" />
+    <item
+        android:id="@+id/itemProfile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile" />
+</menu>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/budget_app_navigation"
+    app:startDestination="@id/itemExpenses">
+
+    <fragment
+        android:id="@+id/itemExpenses"
+        android:name="com.anmpdev.uas_budgeting_app.view.ListExpensesFragment"
+        android:label="fragment_list_expenses"
+        tools:layout="@layout/fragment_list_expenses" >
+        <action
+            android:id="@+id/actionCreateNewExpenses"
+            app:destination="@id/CreateNewExpenses" />
+        <action
+            android:id="@+id/actionDetailExpenses"
+            app:destination="@id/dialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemBudgeting"
+        android:name="com.anmpdev.uas_budgeting_app.view.ListBudgetingFragment"
+        android:label="fragment_list_budgeting"
+        tools:layout="@layout/fragment_list_budgeting" />
+    <fragment
+        android:id="@+id/itemReport"
+        android:name="com.anmpdev.uas_budgeting_app.view.ListReportFragment"
+        android:label="fragment_list_report"
+        tools:layout="@layout/fragment_list_report" />
+    <fragment
+        android:id="@+id/CreateNewExpenses"
+        android:name="com.anmpdev.uas_budgeting_app.view.CreateNewExpenses"
+        android:label="fragment_create_new_expenses"
+        tools:layout="@layout/fragment_create_new_expenses" />
+    <fragment
+        android:id="@+id/itemProfile"
+        android:name="com.anmpdev.uas_budgeting_app.view.MyProfileFragment"
+        android:label="fragment_my_profile"
+        tools:layout="@layout/fragment_my_profile" />
+    <dialog
+        android:id="@+id/dialogFragment"
+        android:name="com.anmpdev.uas_budgeting_app.view.DialogFragment"
+        android:label="DialogFragment" />
+</navigation>
