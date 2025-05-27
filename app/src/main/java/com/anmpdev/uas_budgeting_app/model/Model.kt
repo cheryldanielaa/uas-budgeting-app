@@ -40,7 +40,7 @@ data class Expense(
     @ColumnInfo(name="idBudget")
     var idBudget: Int,
     @ColumnInfo(name="tanggal") //buat insert data, nanti dr spinner yg dipilih
-    var tanggal:String, //tanggal transaksi
+    var tanggal:Long, //tanggal transaksi (unix timestamp)
     @ColumnInfo(name="nominal")
     var nominal:Int,
     @ColumnInfo(name="notes")

@@ -40,5 +40,9 @@
     <dialog
         android:id="@+id/dialogFragment"
         android:name="com.anmpdev.uas_budgeting_app.view.DialogFragment"
-        android:label="DialogFragment" />
+        android:label="DialogFragment" >
+        <argument
+            android:name="idExpense"
+            app:argType="integer" />
+    </dialog>
 </navigation>

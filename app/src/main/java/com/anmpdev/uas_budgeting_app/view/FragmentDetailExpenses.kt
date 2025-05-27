@@ -6,21 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.anmpdev.uas_budgeting_app.R
 import com.anmpdev.uas_budgeting_app.databinding.DialogCardBinding
+import com.anmpdev.uas_budgeting_app.viewmodel.ListExpenseViewModel
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class DialogFragment : DialogFragment() {
     private  var _binding: DialogCardBinding?=null
     private val binding get()=_binding!! //binding itu equeals to _binding
+    private lateinit var viewModel:ListExpenseViewModel //method fetch disini
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = DialogCardBinding.inflate(layoutInflater,container,false)
-        //atur value dari tiap data
-        binding.txtTanggal.text = "21 Maret 2017"
-        binding.txtNotes.text="Bayar sampah bulanan"
-        binding.txtBudgetName.text="Rumah Tangga"
+        //ambil id dari bundle
+        //dialog fragment args itu mksdnya adalah dialogfragment tu fragment skrg
+        val idExpenses = DialogFragmentArgs.fromBundle(requireArguments()).idExpense
+        viewModel = ViewModelProvider(this).get(ListExpenseViewModel::class.java)
+        viewModel.fetch(idExpenses) //ambil data id expense tertentu
+        observeViewModel()
 
         //jika diklik maka close
         binding.btnClose.setOnClickListener {
@@ -33,5 +43,27 @@ class DialogFragment : DialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding=null
+    }
+
+    fun observeViewModel(){
+        viewModel.expenseData.observe(viewLifecycleOwner, Observer {
+            //baca data dari hasil fetching
+            val timestamp = it.tanggal
+            //convert ke tgl biasa
+            val tanggal = Date(timestamp)
+            //ubah ke format hh:mm a >> contoh 12 mei 2025 10.15 am
+            val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a",  Locale("id", "ID"))
+            val str_tanggal = dateFormat.format(tanggal)
+            //tampilin tanggal
+            binding.txtTanggal.text = str_tanggal
+            binding.txtNotes.text=it.notes
+            //tampilin nominal pengeluaran
+            val formatCurrency = NumberFormat.getCurrencyInstance(Locale("id","ID"))
+            formatCurrency.maximumFractionDigits = 0  //biar tdk ada desimal di belakangnya jadi gak ada kayak 1.000,00
+            val nominal = it.nominal
+            binding.txtHarga.text = formatCurrency.format(nominal)
+            //ini budget namenya sementara dummy!!
+            binding.txtBudgetName.text="Rumah Tangga"
+        })
     }
 }
