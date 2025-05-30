@@ -3,6 +3,7 @@ package com.anmpdev.uas_budgeting_app.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.anmpdev.uas_budgeting_app.model.Budget
 import com.anmpdev.uas_budgeting_app.model.Expense
 import com.anmpdev.uas_budgeting_app.util.buildDb
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +33,7 @@ class ListExpenseViewModel(application: Application):
             val db = buildDb(getApplication())
             //code dibawah buat ambil semua data dr database
             //ini mksdnya value dr expense diisi dgn hasil query
+            //ini sementara uuidnya pake dummy >> nanti diganti dr hasil sharedpreferences
             expenseLD.postValue(db.ExpenseDao().selectAllExpense())
             loadingLD.postValue(false) //set utk loadingnya false krn sudah stop
         }
@@ -46,6 +48,47 @@ class ListExpenseViewModel(application: Application):
             //select to do fungsinya buat ambil single todo
             //dan return function tsb
             expenseData.postValue(db.ExpenseDao().selectExpense(id))
+           // Log.d("NOMINAL",db.ExpenseDao().selectExpense(id).toString())
         }
     }
+
+    //buat dummy >> NANTI HAPUS REPLACE PAKE YG ASLI
+    val budgetLD = MutableLiveData<List<Budget>>()
+    fun readBudget(){
+        launch{
+            val db = buildDb(getApplication())
+            //INSERT VALUE DARI BUDGET LD
+            budgetLD.postValue(db.BudgetDao().selectAllBudget())
+        }
+    }
+    val selectedBudget = MutableLiveData<Budget>()
+    val selectedBudgetId = MutableLiveData<Budget>()
+    //ini buat return budget data budget
+    fun searchBudgetName(name:String){
+        launch{
+            val db = buildDb(getApplication())
+            //INSERT VALUE DARI BUDGET LD
+            selectedBudget.postValue(db.BudgetDao().selectidBudget(name))
+        }
+    }
+
+    fun searchBudgetId(id:Int){
+        launch{
+            val db = buildDb(getApplication())
+            //INSERT VALUE DARI BUDGET LD
+            selectedBudgetId.postValue(db.BudgetDao().selectNameBudget(id))
+        }
+    }
+    fun insertDummy(){
+        launch{
+            val db = buildDb(getApplication())
+            db.BudgetDao().insertAll(
+                Budget(uuid = 1, budget_name = "Makan-Minum", nominal = 500000),
+                Budget(uuid = 2, budget_name = "Transportasi", nominal = 800000),
+                Budget(uuid = 3, budget_name = "Fashion", nominal = 1200000),
+                Budget(uuid = 4, budget_name = "Make Up", nominal = 1000000)
+            )
+        }
+    }
+
 }

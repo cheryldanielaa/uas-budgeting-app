@@ -1,6 +1,7 @@
 package com.anmpdev.uas_budgeting_app.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ class DialogFragment : DialogFragment() {
     private  var _binding: DialogCardBinding?=null
     private val binding get()=_binding!! //binding itu equeals to _binding
     private lateinit var viewModel:ListExpenseViewModel //method fetch disini
+
+    private var idBudget:Int=0; //set initial valuenya
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -47,6 +50,9 @@ class DialogFragment : DialogFragment() {
 
     fun observeViewModel(){
         viewModel.expenseData.observe(viewLifecycleOwner, Observer {
+            idBudget = it.idBudget //set disini
+            Log.d("ID_BUDGET",idBudget.toString())
+            viewModel.searchBudgetId(idBudget) //jalnin baca disini
             //baca data dari hasil fetching
             val timestamp = it.tanggal
             //convert ke tgl biasa
@@ -62,8 +68,16 @@ class DialogFragment : DialogFragment() {
             formatCurrency.maximumFractionDigits = 0  //biar tdk ada desimal di belakangnya jadi gak ada kayak 1.000,00
             val nominal = it.nominal
             binding.txtHarga.text = formatCurrency.format(nominal)
-            //ini budget namenya sementara dummy!!
-            binding.txtBudgetName.text="Rumah Tangga"
+            /*ini budget namenya sementara dummy!!
+            binding.txtBudgetName.text="Rumah Tangga"*/
+        });
+
+        //panggil view model dari budget untuk baca nama dari budget dgn
+        //id tertentu
+        viewModel.selectedBudgetId.observe(viewLifecycleOwner, Observer {
+            if(it!=null){
+                binding.txtBudgetName.text = it.budget_name
+            }
         })
     }
 }

@@ -30,6 +30,10 @@ data class Budget(
 ){
     @PrimaryKey(autoGenerate = true)
     var idBudget:Int=0 //dimisalkan idnya 0
+
+    override fun toString(): String {
+        return budget_name //biar di dropdown dia muncul nama budgetnya aja
+    }
 }
 
 @Entity
