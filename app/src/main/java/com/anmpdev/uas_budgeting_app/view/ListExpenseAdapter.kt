@@ -39,7 +39,7 @@ RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
         val tanggal = Date(timestamp)
         //hh:mm a >> biar formatnya am pm, trs hh itu buat format 12 hour, klo HH format 24 hour
         //locale id biar pake bahasa indo formatnya
-        val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a",  Locale("id", "ID"))
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy hh:mm a",  Locale("id", "ID"))
         val str_tanggal = dateFormat.format(tanggal)
         //atur apa yang terjadi di tiap card disini
         holder.binding.txtTanggal.text=str_tanggal.toString()

@@ -58,7 +58,7 @@ class DialogFragment : DialogFragment() {
             //convert ke tgl biasa
             val tanggal = Date(timestamp)
             //ubah ke format hh:mm a >> contoh 12 mei 2025 10.15 am
-            val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a",  Locale("id", "ID"))
+            val dateFormat = SimpleDateFormat("dd MMMM yyyy hh:mm a",  Locale("id", "ID"))
             val str_tanggal = dateFormat.format(tanggal)
             //tampilin tanggal
             binding.txtTanggal.text = str_tanggal
