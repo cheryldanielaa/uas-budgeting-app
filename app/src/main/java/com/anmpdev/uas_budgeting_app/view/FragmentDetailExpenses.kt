@@ -76,7 +76,7 @@ class DialogFragment : DialogFragment() {
         //id tertentu
         viewModel.selectedBudgetId.observe(viewLifecycleOwner, Observer {
             if(it!=null){
-                binding.txtBudgetName.text = it.budget_name
+                binding.chipCategory.text = it.budget_name
             }
         })
     }

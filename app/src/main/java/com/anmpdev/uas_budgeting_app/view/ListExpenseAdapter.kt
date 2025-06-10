@@ -49,8 +49,8 @@ RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
         val nominal = expenseList[position].nominal
         holder.binding.txtHarga.text = formatCurrency.format(nominal) //ubah ke format Rp
 
-        //klo misal klik maka arahin ke detail expense
-        holder.binding.expenseCard.setOnClickListener {
+        //klo misal klik harganya
+        holder.binding.txtHarga.setOnClickListener {
             //klo diklik btn kategorinya auto kebuka navnya
             val action = ListExpensesFragmentDirections.actionDetailExpenses(expenseList[position].idExpense)
             Navigation.findNavController(it).navigate(action) //pergila ke action itu
@@ -59,7 +59,7 @@ RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
         //cari objek dimana idbudget dr budget list = idbugdet di expense list
         //buat tiap data, klo ada maka print budget name, klo gak ada unknown
         val matchedBudget = budgetList.find { it.idBudget == expenseList[position].idBudget }
-        holder.binding.btnCategoryExpenses.text = matchedBudget?.budget_name ?: "Unknown"
+        holder.binding.chipExpenseCategory.text = matchedBudget?.budget_name ?: "Unknown"
     }
 
     fun updateListExpense(newListExpense:List<Expense>){

@@ -1,6 +1,7 @@
 package com.anmpdev.uas_budgeting_app.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,7 @@ class ListExpensesFragment : Fragment() {
         //inisialisasi viewmodel disini
         viewModel = ViewModelProvider(this).get(ListExpenseViewModel::class.java)
         //buat data dummy utk insert budget >> nanti dihapus
-        //viewModel.insertDummy() >> run sekali aja >> klo mau ngedummy
+        //viewModel.insertDummy() //>> run sekali aja >> klo mau ngedummy
         //vmBudget = ViewModelProvider(this).get(ListBudgetViewModel::class.java)
         //baca data budget
         viewModel.readBudget()
@@ -66,6 +67,7 @@ class ListExpensesFragment : Fragment() {
             else{
                 //klo data udah ada maka visible
                 binding.recView?.visibility = View.VISIBLE
+                //Log.d("DB_CHECK",it.toString())
             }
         })
 

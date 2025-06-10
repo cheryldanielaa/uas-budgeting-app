@@ -45,7 +45,7 @@ class ListExpenseViewModel(application: Application):
     fun fetch(id:Int){
         launch {
             val db = buildDb(getApplication())
-            //select to do fungsinya buat ambil single todo
+            //select to do fungsinya buat ambil single to-do
             //dan return function tsb
             expenseData.postValue(db.ExpenseDao().selectExpense(id))
            // Log.d("NOMINAL",db.ExpenseDao().selectExpense(id).toString())
@@ -84,9 +84,7 @@ class ListExpenseViewModel(application: Application):
             val db = buildDb(getApplication())
             db.BudgetDao().insertAll(
                 Budget(uuid = 1, budget_name = "Makan-Minum", nominal = 500000),
-                Budget(uuid = 2, budget_name = "Transportasi", nominal = 800000),
-                Budget(uuid = 3, budget_name = "Fashion", nominal = 1200000),
-                Budget(uuid = 4, budget_name = "Make Up", nominal = 1000000)
+                Budget(uuid = 2, budget_name = "Transportasi", nominal = 800000)
             )
         }
     }
