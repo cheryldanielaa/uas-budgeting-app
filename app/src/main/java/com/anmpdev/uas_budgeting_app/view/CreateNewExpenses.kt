@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 class CreateNewExpenses : Fragment(){
 
     private lateinit var binding:FragmentCreateNewExpensesBinding
@@ -29,6 +28,7 @@ class CreateNewExpenses : Fragment(){
     private lateinit var selectedBudget:Budget //buat tampung objek yg dipilih
     private lateinit var listBudget:ArrayList<Budget>
     private var sisa_uang:Int = 0 //ini sisa uang bakal dideclare buat checking
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,24 +41,31 @@ class CreateNewExpenses : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         //deklarasikan viewmodel disini, dimana vm utk class ini dr createviewmodel
         viewModel = ViewModelProvider(this).get(CreateExpenseViewModel::class.java)
+
         //nanti diganti pake vmbudget
         viewModel.readBudget() //baca budgetnya
         //set initial valuenya dlu buat tanggalnya gimana
+
         val currentDate = Date()
         //ambil data tanggal sesuai hari ini, pake ID biar dia namanya mei :) not may
         val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+
         //waktu create nex expense, yang ditampilin cuman tanggalnya aja
         binding.txtTanggal.text = dateFormat.format(currentDate)
+
         //dapetin timestamp dari jam sekarang
         val timestamp = System.currentTimeMillis()
         //waktu details dan di list yang ditampilin sama menitnya juga
         //pakai unix timestamp
+
         binding.btnAddExpense.setOnClickListener {
             var nominal = binding.txtNominal.text.toString().toInt()
             var notes = binding.txtNotes.text.toString()
+
             //pengecekan backstack smua hrs di view model?!
             //buat objek expense
             var expense = Expense(1,selectedBudget.idBudget,timestamp,nominal,notes)
+
             //masukin ke dalam list >> yang dimasukin berupa list
             //krn kita pake vararg
             viewModel.addExpense(expense,sisa_uang) //kirim param expense dan sisa uang

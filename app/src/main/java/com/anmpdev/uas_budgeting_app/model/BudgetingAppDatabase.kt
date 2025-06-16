@@ -23,6 +23,7 @@ abstract class BudgetingAppDatabase:RoomDatabase(){
                 context.applicationContext,
                 BudgetingAppDatabase::class.java,
                 DB_NAME).build()
+
         operator fun invoke(context: Context){
             if(instance==null){
                 synchronized(LOCK){

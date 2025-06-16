@@ -13,11 +13,13 @@ interface ExpenseDao {
     data yang baru*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg expense:Expense) //insert all nama methodnya
+
     //baca semua data expense, urutkan dari yang terkecil ke terbesar (paling baru paling atas)
     //cari juga berdasarkan uuid tertentu
     //filteringnya nnti trakhir aaja
     @Query("SELECT * from expense order by tanggal DESC")
     fun selectAllExpense():List<Expense> //return berupa list
+
     //baca 1 data expense berdasarkan id yang dipilih
     @Query("SELECT * from expense where idExpense=:idExpense")
     fun selectExpense(idExpense:Int):Expense //expense itu type data yg direturn
