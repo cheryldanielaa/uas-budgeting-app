@@ -17,8 +17,8 @@ interface ExpenseDao {
     //baca semua data expense, urutkan dari yang terkecil ke terbesar (paling baru paling atas)
     //cari juga berdasarkan uuid tertentu
     //filteringnya nnti trakhir aaja
-    @Query("SELECT * from expense order by tanggal DESC")
-    fun selectAllExpense():List<Expense> //return berupa list
+    @Query("SELECT * from expense  where uuid=:uuid order by tanggal DESC")
+    fun selectAllExpense(uuid:Int):List<Expense> //return berupa list
 
     //baca 1 data expense berdasarkan id yang dipilih
     @Query("SELECT * from expense where idExpense=:idExpense")

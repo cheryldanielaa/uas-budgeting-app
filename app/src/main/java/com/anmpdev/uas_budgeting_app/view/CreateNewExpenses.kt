@@ -1,5 +1,7 @@
 package com.anmpdev.uas_budgeting_app.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -28,7 +30,7 @@ class CreateNewExpenses : Fragment(){
     private lateinit var selectedBudget:Budget //buat tampung objek yg dipilih
     private lateinit var listBudget:ArrayList<Budget>
     private var sisa_uang:Int = 0 //ini sisa uang bakal dideclare buat checking
-
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +41,9 @@ class CreateNewExpenses : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //ambil data shared preferences
+        sharedPreferences = requireActivity().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
+        val uuid = sharedPreferences.getInt("user_id", 0) //kasih default valuenya 0
         //deklarasikan viewmodel disini, dimana vm utk class ini dr createviewmodel
         viewModel = ViewModelProvider(this).get(CreateExpenseViewModel::class.java)
 
@@ -64,7 +69,8 @@ class CreateNewExpenses : Fragment(){
 
             //pengecekan backstack smua hrs di view model?!
             //buat objek expense
-            var expense = Expense(1,selectedBudget.idBudget,timestamp,nominal,notes)
+            //uuidnya ambil dari sharedPreferences
+            var expense = Expense(uuid,selectedBudget.idBudget,timestamp,nominal,notes)
 
             //masukin ke dalam list >> yang dimasukin berupa list
             //krn kita pake vararg

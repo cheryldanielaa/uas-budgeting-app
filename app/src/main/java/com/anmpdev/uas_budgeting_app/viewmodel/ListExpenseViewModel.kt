@@ -25,7 +25,8 @@ class ListExpenseViewModel(application: Application):
     val expenseLoadErrorLD =MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>() //buat cek status msi load atau gak
 
-    fun refresh(){
+    //terima id dari user tsb
+    fun refresh(uuid:Int){
         //function utk refresh data
         loadingLD.value = true //pertama kali refresh pasti statusnya true
         expenseLoadErrorLD.value = false
@@ -34,7 +35,7 @@ class ListExpenseViewModel(application: Application):
             //code dibawah buat ambil semua data dr database
             //ini mksdnya value dr expense diisi dgn hasil query
             //ini sementara uuidnya pake dummy >> nanti diganti dr hasil sharedpreferences
-            expenseLD.postValue(db.ExpenseDao().selectAllExpense())
+            expenseLD.postValue(db.ExpenseDao().selectAllExpense(uuid))
             loadingLD.postValue(false) //set utk loadingnya false krn sudah stop
         }
     }

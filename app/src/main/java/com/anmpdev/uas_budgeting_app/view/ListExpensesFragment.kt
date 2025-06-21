@@ -1,5 +1,7 @@
 package com.anmpdev.uas_budgeting_app.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +19,8 @@ import com.anmpdev.uas_budgeting_app.viewmodel.ListExpenseViewModel
 class ListExpensesFragment : Fragment() {
     private lateinit var binding:FragmentListExpensesBinding
     private lateinit var viewModel:ListExpenseViewModel
+    //shared preferences utk nampung uuidnya berapa
+    private lateinit var sharedPreferences: SharedPreferences
     //tambahin lambda function utk nambahin adapter utk list expense
     private var expenseListAdapter = ListExpenseAdapter(arrayListOf(), arrayListOf())
     override fun onCreateView(
@@ -30,6 +34,9 @@ class ListExpensesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //ambil data shared preferences
+        sharedPreferences = requireActivity().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
+        val uuid = sharedPreferences.getInt("user_id", 0) //kasih default valuenya 0
         //inisialisasi viewmodel disini
         viewModel = ViewModelProvider(this).get(ListExpenseViewModel::class.java)
         //buat data dummy utk insert budget >> nanti dihapus
@@ -38,7 +45,7 @@ class ListExpensesFragment : Fragment() {
         //baca data budget
         viewModel.readBudget()
         //isi hasil load data disini
-        viewModel.refresh() //isi data viewmodelnya
+        viewModel.refresh(uuid) //isi data viewmodelnya
         //isi data adapter
         binding.recView.layoutManager=LinearLayoutManager(context)
         binding.recView.adapter = expenseListAdapter
@@ -47,9 +54,6 @@ class ListExpensesFragment : Fragment() {
             //arahkan ke fragment tsb pke navigation
             val action = ListExpensesFragmentDirections.actionCreateNewExpenses()
             Navigation.findNavController(it).navigate(action)
-            /*kode dibawah dibuat klo udh kehubung sm adapterrr
-            val action = ListExpensesFragmentDirections.actionDetailExpenses()
-            Navigation.findNavController(it).navigate(action)*/
         }
         observeViewModel()
     }
@@ -70,7 +74,6 @@ class ListExpensesFragment : Fragment() {
                 //Log.d("DB_CHECK",it.toString())
             }
         })
-
         //atur loading ld
         viewModel.loadingLD.observe(viewLifecycleOwner,Observer{
             if(it==false){
