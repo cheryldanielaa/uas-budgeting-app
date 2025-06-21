@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 class DialogFragment : DialogFragment() {
     private  var _binding: DialogCardBinding?=null
     private val binding get()=_binding!! //binding itu equeals to _binding
