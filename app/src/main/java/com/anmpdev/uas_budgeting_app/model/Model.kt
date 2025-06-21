@@ -9,6 +9,10 @@ import androidx.room.PrimaryKey
 data class User(
     @ColumnInfo(name="username")
     var username:String,
+    @ColumnInfo(name="fname")
+    var fname:String,
+    @ColumnInfo(name="lname")
+    var lname:String,
     @ColumnInfo(name="password")
     var password:String,
 ){
@@ -18,6 +22,7 @@ data class User(
     //trs nnti dia bakalan auto increment
     var uuid:Int=0 //dimisalkan idnya 0
 }
+
 @Entity
 //data class budget
 data class Budget(
@@ -53,3 +58,4 @@ data class Expense(
     @PrimaryKey(autoGenerate = true)
     var idExpense:Int=0 //dimisalkan idnya 0
 }
+
