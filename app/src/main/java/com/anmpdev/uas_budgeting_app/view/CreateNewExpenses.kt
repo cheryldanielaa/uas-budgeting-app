@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import com.anmpdev.uas_budgeting_app.databinding.FragmentCreateNewExpensesBinding
 import com.anmpdev.uas_budgeting_app.model.Budget
 import com.anmpdev.uas_budgeting_app.model.Expense
+import com.anmpdev.uas_budgeting_app.viewmodel.BudgetViewModel
 import com.anmpdev.uas_budgeting_app.viewmodel.CreateExpenseViewModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -27,6 +28,7 @@ class CreateNewExpenses : Fragment(){
 
     private lateinit var binding:FragmentCreateNewExpensesBinding
     private lateinit var viewModel:CreateExpenseViewModel
+    private lateinit var vmBudget:BudgetViewModel
     private lateinit var selectedBudget:Budget //buat tampung objek yg dipilih
     private lateinit var listBudget:ArrayList<Budget>
     private var sisa_uang:Int = 0 //ini sisa uang bakal dideclare buat checking
@@ -46,9 +48,9 @@ class CreateNewExpenses : Fragment(){
         val uuid = sharedPreferences.getInt("user_id", 0) //kasih default valuenya 0
         //deklarasikan viewmodel disini, dimana vm utk class ini dr createviewmodel
         viewModel = ViewModelProvider(this).get(CreateExpenseViewModel::class.java)
-
+        vmBudget = ViewModelProvider(this).get(BudgetViewModel::class.java)
         //nanti diganti pake vmbudget
-        viewModel.readBudget() //baca budgetnya
+        vmBudget.readBudget(uuid) //baca budgetnya
         //set initial valuenya dlu buat tanggalnya gimana
 
         val currentDate = Date()
@@ -132,7 +134,7 @@ class CreateNewExpenses : Fragment(){
     //baca viewmodel
     fun observeViewModel(){
         //baca list budget yang ada
-        viewModel.budgetLD.observe(viewLifecycleOwner, Observer {
+        vmBudget.budgetLD.observe(viewLifecycleOwner, Observer {
             listBudget = it as ArrayList<Budget> //tampung value dari it di arraylist
             //perbarui data adapter scr terus menerus
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)

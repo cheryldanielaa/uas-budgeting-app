@@ -13,12 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anmpdev.uas_budgeting_app.databinding.FragmentListExpensesBinding
+import com.anmpdev.uas_budgeting_app.viewmodel.BudgetViewModel
 import com.anmpdev.uas_budgeting_app.viewmodel.ListExpenseViewModel
 
 
 class ListExpensesFragment : Fragment() {
     private lateinit var binding:FragmentListExpensesBinding
     private lateinit var viewModel:ListExpenseViewModel
+    private lateinit var vmBudget:BudgetViewModel
     //shared preferences utk nampung uuidnya berapa
     private lateinit var sharedPreferences: SharedPreferences
     //tambahin lambda function utk nambahin adapter utk list expense
@@ -39,11 +41,9 @@ class ListExpensesFragment : Fragment() {
         val uuid = sharedPreferences.getInt("user_id", 0) //kasih default valuenya 0
         //inisialisasi viewmodel disini
         viewModel = ViewModelProvider(this).get(ListExpenseViewModel::class.java)
+        vmBudget = ViewModelProvider(this).get(BudgetViewModel::class.java)
         //buat data dummy utk insert budget >> nanti dihapus
-        //viewModel.insertDummy() //>> run sekali aja >> klo mau ngedummy
-        //vmBudget = ViewModelProvider(this).get(ListBudgetViewModel::class.java)
-        //baca data budget
-        viewModel.readBudget()
+        vmBudget.readBudget(uuid)
         //isi hasil load data disini
         viewModel.refresh(uuid) //isi data viewmodelnya
         //isi data adapter
@@ -96,7 +96,7 @@ class ListExpensesFragment : Fragment() {
         });
 
         //perbarui adapter utk data dr budget ld
-        viewModel.budgetLD.observe(viewLifecycleOwner, Observer {
+        vmBudget.budgetLD.observe(viewLifecycleOwner, Observer {
             //isi semua data :) >> harus pake update list budget biar dia data
             //dari parameter adapternya keisi
             expenseListAdapter.updateListBudget(it)

@@ -21,7 +21,14 @@
         android:id="@+id/itemBudgeting"
         android:name="com.anmpdev.uas_budgeting_app.view.ListBudgetingFragment"
         android:label="fragment_list_budgeting"
-        tools:layout="@layout/fragment_list_budgeting" />
+        tools:layout="@layout/fragment_list_budgeting" >
+        <action
+            android:id="@+id/actionToEditBudget"
+            app:destination="@id/editBudget" />
+        <action
+            android:id="@+id/actionToAddBudget"
+            app:destination="@id/addBudget" />
+    </fragment>
     <fragment
         android:id="@+id/itemReport"
         android:name="com.anmpdev.uas_budgeting_app.view.ListReportFragment"
@@ -45,4 +52,18 @@
             android:name="idExpense"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/editBudget"
+        android:name="com.anmpdev.uas_budgeting_app.view.EditBudget"
+        android:label="fragment_edit_budget"
+        tools:layout="@layout/fragment_edit_budget" >
+        <argument
+            android:name="idBudget"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/addBudget"
+        android:name="com.anmpdev.uas_budgeting_app.view.AddBudget"
+        android:label="fragment_add_budget"
+        tools:layout="@layout/fragment_add_budget" />
 </navigation>

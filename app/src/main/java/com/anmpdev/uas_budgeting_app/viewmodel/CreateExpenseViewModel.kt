@@ -55,33 +55,4 @@ class CreateExpenseViewModel(application: Application)
             //Log.d("NOMINAL",nominalPengeluaran.toString())
         }
     }
-
-
-    //SEMENTARA BUAT DUMMY
-    val budgetLD = MutableLiveData<List<Budget>>()
-    fun readBudget(){
-        launch{
-            val db = buildDb(getApplication())
-            //INSERT VALUE DARI BUDGET LD
-            budgetLD.postValue(db.BudgetDao().selectAllBudget())
-        }
-    }
-    val selectedBudget = MutableLiveData<Budget>()
-    val selectedBudgetId = MutableLiveData<Budget>()
-    //ini buat return budget data budget
-    fun searchBudgetName(name:String){
-        launch{
-            val db = buildDb(getApplication())
-            //INSERT VALUE DARI BUDGET LD
-            selectedBudget.postValue(db.BudgetDao().selectidBudget(name))
-        }
-    }
-
-    fun searchBudgetId(id:Int){
-        launch{
-            val db = buildDb(getApplication())
-            //INSERT VALUE DARI BUDGET LD
-            selectedBudgetId.postValue(db.BudgetDao().selectNameBudget(id))
-        }
-    }
 }

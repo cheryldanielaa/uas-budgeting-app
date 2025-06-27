@@ -52,42 +52,4 @@ class ListExpenseViewModel(application: Application):
            // Log.d("NOMINAL",db.ExpenseDao().selectExpense(id).toString())
         }
     }
-
-    //buat dummy >> NANTI HAPUS REPLACE PAKE YG ASLI
-    val budgetLD = MutableLiveData<List<Budget>>()
-    fun readBudget(){
-        launch{
-            val db = buildDb(getApplication())
-            //INSERT VALUE DARI BUDGET LD
-            budgetLD.postValue(db.BudgetDao().selectAllBudget())
-        }
-    }
-    val selectedBudget = MutableLiveData<Budget>()
-    val selectedBudgetId = MutableLiveData<Budget>()
-    //ini buat return budget data budget
-    fun searchBudgetName(name:String){
-        launch{
-            val db = buildDb(getApplication())
-            //INSERT VALUE DARI BUDGET LD
-            selectedBudget.postValue(db.BudgetDao().selectidBudget(name))
-        }
-    }
-
-    fun searchBudgetId(id:Int){
-        launch{
-            val db = buildDb(getApplication())
-            //INSERT VALUE DARI BUDGET LD
-            selectedBudgetId.postValue(db.BudgetDao().selectNameBudget(id))
-        }
-    }
-    fun insertDummy(){
-        launch{
-            val db = buildDb(getApplication())
-            db.BudgetDao().insertAll(
-                Budget(uuid = 1, budget_name = "Makan-Minum", nominal = 500000),
-                Budget(uuid = 2, budget_name = "Transportasi", nominal = 800000)
-            )
-        }
-    }
-
 }

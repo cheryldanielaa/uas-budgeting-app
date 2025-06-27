@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.anmpdev.uas_budgeting_app.R
 import com.anmpdev.uas_budgeting_app.databinding.DialogCardBinding
+import com.anmpdev.uas_budgeting_app.viewmodel.BudgetViewModel
 import com.anmpdev.uas_budgeting_app.viewmodel.ListExpenseViewModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -21,7 +22,7 @@ class DialogFragment : DialogFragment() {
     private  var _binding: DialogCardBinding?=null
     private val binding get()=_binding!! //binding itu equeals to _binding
     private lateinit var viewModel:ListExpenseViewModel //method fetch disini
-
+    private lateinit var vmBudget:BudgetViewModel
     private var idBudget:Int=0; //set initial valuenya
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,6 +32,7 @@ class DialogFragment : DialogFragment() {
         //dialog fragment args itu mksdnya adalah dialogfragment tu fragment skrg
         val idExpenses = DialogFragmentArgs.fromBundle(requireArguments()).idExpense
         viewModel = ViewModelProvider(this).get(ListExpenseViewModel::class.java)
+        vmBudget = ViewModelProvider(this).get(BudgetViewModel::class.java)
         viewModel.fetch(idExpenses) //ambil data id expense tertentu
         observeViewModel()
 
@@ -51,7 +53,7 @@ class DialogFragment : DialogFragment() {
         viewModel.expenseData.observe(viewLifecycleOwner, Observer {
             idBudget = it.idBudget //set disini
             Log.d("ID_BUDGET",idBudget.toString())
-            viewModel.searchBudgetId(idBudget) //jalnin baca disini
+            vmBudget.selectABudget(idBudget) //jalnin baca disini
             //baca data dari hasil fetching
             val timestamp = it.tanggal
             //convert ke tgl biasa
@@ -73,7 +75,7 @@ class DialogFragment : DialogFragment() {
 
         //panggil view model dari budget untuk baca nama dari budget dgn
         //id tertentu
-        viewModel.selectedBudgetId.observe(viewLifecycleOwner, Observer {
+        vmBudget.budgetData.observe(viewLifecycleOwner, Observer {
             if(it!=null){
                 binding.chipCategory.text = it.budget_name
             }
