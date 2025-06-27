@@ -4,12 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.anmpdev.uas_budgeting_app.R
-import com.anmpdev.uas_budgeting_app.databinding.ActivityMainBinding
 import com.anmpdev.uas_budgeting_app.databinding.ActivitySignInUpBinding
 
 class SignInUpActivity : AppCompatActivity() {

@@ -27,7 +27,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application),
                 db.userDao().insertUser(user)
                 statusInsert.postValue(true)
             } else {
-                statusInsert.postValue(false) // user already exists
+                statusInsert.postValue(false)
             }
         }
     }

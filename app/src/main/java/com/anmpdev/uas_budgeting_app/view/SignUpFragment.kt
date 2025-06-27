@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.anmpdev.uas_budgeting_app.R
 import com.anmpdev.uas_budgeting_app.databinding.FragmentSignUpBinding
 import com.anmpdev.uas_budgeting_app.viewmodel.SignUpViewModel
 import com.anmpdev.uas_budgeting_app.model.User
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
