@@ -11,17 +11,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
         android:text="Expense Tracker"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/md_theme_onBackground"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="100dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -40,7 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="TxtError" />
+        android:text="TxtError"
+        android:textColor="@color/md_theme_onBackground" />
 
     <ProgressBar
         android:id="@+id/progressLoad"

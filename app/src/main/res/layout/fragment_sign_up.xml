@@ -15,9 +15,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="50dp"
             android:text="Create Account"
             android:textSize="30sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -144,7 +145,7 @@
             android:id="@+id/btnCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:text="CREATE ACCOUNT"
             app:layout_constraintEnd_toEndOf="parent"

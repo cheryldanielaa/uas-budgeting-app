@@ -15,10 +15,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
             android:text="New Expense"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/md_theme_onBackground"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Date"
+            android:textColor="@color/md_theme_onBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
@@ -41,6 +44,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="19 Mei 2025"
+            android:textColor="@color/md_theme_onBackground"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -50,8 +54,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/md_theme_onBackground"
+            android:foregroundTint="@color/md_theme_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTanggal" />
@@ -76,9 +82,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:text="IDR 400.000"
-            android:textSize="12sp"
+            android:textColor="@color/md_theme_onBackground"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/budgetType" />
 
@@ -86,10 +93,11 @@
             android:id="@+id/txtTotalBudget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
             android:text="IDR 1.000.000"
-            android:textSize="12sp"
+            android:textColor="@color/md_theme_onBackground"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/budgetType" />
 
@@ -108,7 +116,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtNominal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_onBackground"
+                android:textColorHint="@color/md_theme_onBackground" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -135,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="16dp"
-            android:text="Add Expense"
+            android:text="ADD EXPENSE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
     </androidx.constraintlayout.widget.ConstraintLayout>

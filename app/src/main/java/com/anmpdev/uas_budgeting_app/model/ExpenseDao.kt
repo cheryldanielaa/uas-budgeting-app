@@ -27,4 +27,7 @@ interface ExpenseDao {
     //baca total nominalnya berapa
     @Query("SELECT sum (nominal) from expense where idBudget=:idBudget")
     fun selectNominalBudget(idBudget: Int):Int? //return berupa nominal, nullable
+
+    @Query("SELECT b.budget_name as name, b.nominal as nominal, SUM(e.nominal) as used FROM budget b LEFT JOIN expense e ON b.idBudget = e.idBudget WHERE b.uuid = :userId GROUP BY b.idbudget")
+    fun getReportByUser(userId: Int): List<Report>
 }

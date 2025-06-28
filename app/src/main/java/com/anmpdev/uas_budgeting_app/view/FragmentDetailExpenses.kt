@@ -65,10 +65,10 @@ class DialogFragment : DialogFragment() {
             binding.txtTanggal.text = str_tanggal
             binding.txtNotes.text=it.notes
             //tampilin nominal pengeluaran
-            val formatCurrency = NumberFormat.getCurrencyInstance(Locale("id","ID"))
+            val formatCurrency = NumberFormat.getInstance(Locale("id","ID"))
             formatCurrency.maximumFractionDigits = 0  //biar tdk ada desimal di belakangnya jadi gak ada kayak 1.000,00
             val nominal = it.nominal
-            binding.txtHarga.text = formatCurrency.format(nominal)
+            binding.txtHarga.text = "IDR ${formatCurrency.format(nominal)}"
             /*ini budget namenya sementara dummy!!
             binding.txtBudgetName.text="Rumah Tangga"*/
         });

@@ -59,3 +59,9 @@ data class Expense(
     var idExpense:Int=0 //dimisalkan idnya 0
 }
 
+data class Report(
+    val name: String,
+    val nominal: Int,
+    val used: Int
+)
+

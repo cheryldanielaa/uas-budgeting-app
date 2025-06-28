@@ -143,10 +143,10 @@ class CreateNewExpenses : Fragment(){
             binding.budgetType.adapter = adapter
         });
         viewModel.totalPengeluaran.observe(viewLifecycleOwner, Observer {
-            val formatCurrency = NumberFormat.getCurrencyInstance(Locale("id","ID"))
+            val formatCurrency = NumberFormat.getInstance(Locale("id","ID"))
             formatCurrency.maximumFractionDigits = 0
             //yang terjadi adalah dia update valuenya
-            binding.txtTotalExpense.text = formatCurrency.format(it)
+            binding.txtTotalExpense.text = "IDR ${formatCurrency.format(it)}"
             //set value dari expense progressnya seberapa
             binding.expenseProgress.progress = it
         });
@@ -158,8 +158,8 @@ class CreateNewExpenses : Fragment(){
             }
             val formatCurrency = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
             formatCurrency.maximumFractionDigits = 0
-            val formatted = formatCurrency.format(sisa_uang)
-            binding.textInputLayout.hint = "Nominal ("+formatted+" left)";
+            val formatted = "IDR ${formatCurrency.format(sisa_uang)}"
+            binding.txtNominal.hint = "Nominal ("+formatted+" left)";
         });
 
         viewModel.statusInsert.observe(viewLifecycleOwner, Observer {

@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import com.anmpdev.uas_budgeting_app.R
 import com.anmpdev.uas_budgeting_app.databinding.FragmentMyProfileBinding
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
 
 class MyProfileFragment : Fragment() {
     private lateinit var binding: FragmentMyProfileBinding
@@ -41,5 +43,19 @@ class MyProfileFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         }
+
+        binding.txtRepeatPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val password = binding.txtNewPassword.text.toString()
+                val repeatPassword = binding.txtRepeatPassword.text.toString()
+                if (repeatPassword != password) {
+                    binding.repeatPasswordInputLayout.error = "Passwords do not match"
+                } else {
+                    binding.repeatPasswordInputLayout.error = null
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 }

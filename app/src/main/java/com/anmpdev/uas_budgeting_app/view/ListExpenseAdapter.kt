@@ -44,10 +44,10 @@ RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
         //atur apa yang terjadi di tiap card disini
         holder.binding.txtTanggal.text=str_tanggal.toString()
         //buat format penulisan angka (currency)
-        val formatCurrency = NumberFormat.getCurrencyInstance(Locale("id","ID"))
+        val formatCurrency = NumberFormat.getInstance(Locale("id","ID"))
         formatCurrency.maximumFractionDigits = 0  //biar tdk ada desimal di belakangnya jadi gak ada kayak 1.000,00
         val nominal = expenseList[position].nominal
-        holder.binding.txtHarga.text = formatCurrency.format(nominal) //ubah ke format Rp
+        holder.binding.txtHarga.text = "IDR ${formatCurrency.format(nominal)}" //ubah ke format Rp
 
         //klo misal klik harganya
         holder.binding.txtHarga.setOnClickListener {
