@@ -10,8 +10,14 @@ import android.view.ViewGroup
 import com.anmpdev.uas_budgeting_app.R
 import com.anmpdev.uas_budgeting_app.databinding.FragmentMyProfileBinding
 import android.content.Intent
+import android.graphics.Typeface
 import android.text.Editable
+import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.style.StyleSpan
 
 class MyProfileFragment : Fragment() {
     private lateinit var binding: FragmentMyProfileBinding
@@ -43,6 +49,11 @@ class MyProfileFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         }
+
+        val name = sharedPreferences.getString("user_full_name", "")
+
+        //supaya cuma name yg bold
+        binding.txtHello.text = Html.fromHtml("Hey, <b>$name</b>! How are you today?", Html.FROM_HTML_MODE_LEGACY)
 
         binding.txtRepeatPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

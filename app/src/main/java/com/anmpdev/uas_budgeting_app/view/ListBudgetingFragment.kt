@@ -56,7 +56,7 @@ class ListBudgetingFragment : Fragment() {
             budgetListadapter.updateListBudget(it)
             if(it.isEmpty()){
                 binding.recView?.visibility = View.GONE
-                binding.txtError.setText("Belum ada Budget yang tersimpan")
+                binding.txtError.text = "Belum ada Budget yang tersimpan"
             }
             else{
                 binding.recView?.visibility = View.VISIBLE

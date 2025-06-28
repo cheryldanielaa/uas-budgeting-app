@@ -66,7 +66,7 @@ class ListExpensesFragment : Fragment() {
             if(it.isEmpty()){
                 //jika tdk ada data yang terfetch/db kosong
                 binding.recView?.visibility = View.GONE //sembunyikan recycler view
-                binding.txtError.setText("You haven't listed any expenses yet!")
+                binding.txtError.text = "You haven't listed any expenses yet!"
             }
             else{
                 //klo data udah ada maka visible
