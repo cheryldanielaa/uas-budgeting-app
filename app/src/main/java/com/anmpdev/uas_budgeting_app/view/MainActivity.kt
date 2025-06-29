@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         navController = (supportFragmentManager.findFragmentById(R.id.fragmentHost) as NavHostFragment).navController
         //buat koneksi untuk menghubungkan fragment dengan bottom nav
         binding.bottomNav.setupWithNavController(navController)
-
         val sharedPreferences = getSharedPreferences("SETTING", Context.MODE_PRIVATE)
         val loginState = sharedPreferences.getBoolean("LOGIN_STATE", false)
 
@@ -35,6 +34,30 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SignInUpActivity::class.java)
             startActivity(intent)
             finish()
+        }
+        changeIconFromAdd() //pastiin panggil handlingnya disini
+    }
+    //ini fungsinya biar klo sekarang dia lagi di add expense, maka dia jg
+    //navbarnya bakal brubah ke expense jg, soale awalnya dee bakal klo misal lagi di add
+    //expense, pinda budget, balik ke expense, dee gabakal nandai expense e krn id e ga kedaftar di
+    //navbar
+    fun changeIconFromAdd(){
+        //buat mapping fragment, jadi fragment yg anak dari fragment utama
+        //bakal dilist disini
+        //a to b >> a itu child, b parent nya
+        val fragmentMap = mapOf(
+            R.id.CreateNewExpenses to R.id.itemExpenses,
+            R.id.addBudget to R.id.itemBudgeting,
+            R.id.editBudget to R.id.itemBudgeting
+            )
+        //buat listenernya
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            //cari dulu item yang child ini dari hasil mapping
+            val childItem = fragmentMap[destination.id]
+            //klo semisal skrg lagi di item child, maka ya apnggil item itu,
+            //klo gk ada ya ambil parentnya dan anggap sebagai fragment dengan IdAktif
+            val navItemId = childItem ?: destination.id
+            binding.bottomNav.menu.findItem(navItemId)?.isChecked = true
         }
     }
 }

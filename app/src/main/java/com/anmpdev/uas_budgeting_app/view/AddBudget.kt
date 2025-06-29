@@ -36,16 +36,19 @@ class AddBudget : Fragment() {
         viewModel = ViewModelProvider(this).get(BudgetViewModel::class.java)
 
         binding.btnAddBudget.setOnClickListener {
+            var nominal=0
             val namaBudget =binding.txtBudgetName.text.toString()
-
-            val nominal=binding.txtNominal.text.toString().toInt()
-            if(nominal>0 && namaBudget!=""){
+            val txtNominal = binding.txtNominal.text.toString()
+            if(txtNominal.isNotBlank()){
+                nominal=txtNominal.toInt()
+            }
+            if(nominal>0&& namaBudget.isNotBlank()){
                 var budgetBaru = Budget(uuid, namaBudget, nominal)
                 viewModel.insertBudget(budgetBaru)
                 Navigation.findNavController(requireView()).popBackStack()
             }
             else{
-                Toast.makeText(context, "Nominal tidak boleh bernilai negatif", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Budget harus diisi dan nominal tidak boleh bernilai negatif", Toast.LENGTH_SHORT).show()
             }
 
         }

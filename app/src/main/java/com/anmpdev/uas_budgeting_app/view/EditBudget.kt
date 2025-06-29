@@ -55,29 +55,29 @@ class EditBudget : Fragment() {
             totalPengeluaran = value
         }
         binding.btnEditBudget.setOnClickListener {
+            var nominal=0; //counter
             val namaBudget =binding.txtBudgetName.text.toString()
-            val nominal=binding.txtNominal.text.toString().toInt()
-            //cek dulu apakah expense lebih kecil dr budget baru, ya maka
-            if(totalPengeluaran<=nominal){
-                if(nominal>0 && namaBudget!=""){
-//                    val budgetBaru = Budget(namaBudget, nominal)
-                    viewModelBudget.editBudget(namaBudget,nominal, idBudget)
+            val txtNominal =binding.txtNominal.text.toString()
+            if(txtNominal.isNotBlank()){
+                nominal=txtNominal.toInt()
+            }
+            //lakuin pengecekan biar gak error
+            if(namaBudget.isNotBlank() && nominal>0) {
+                //cek dulu apakah expense lebih kecil dr budget baru, ya maka
+                if (totalPengeluaran <= nominal) {
+                    viewModelBudget.editBudget(namaBudget, nominal, idBudget)
                     Navigation.findNavController(requireView()).popBackStack()
-                }
-                else{
-                    Toast.makeText(context, "Nominal tidak boleh bernilai negatif", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Nominal tidak boleh lebih kecil dari $totalPengeluaran",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             else{
-                Toast.makeText(context, "Nominal tidak boleh lebih kecil dari $totalPengeluaran", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Nama budget harus diisi dan nominal tidak boleh bernilai negatif", Toast.LENGTH_SHORT).show()
             }
-
-
         }
-
-
     }
-
-
-
 }

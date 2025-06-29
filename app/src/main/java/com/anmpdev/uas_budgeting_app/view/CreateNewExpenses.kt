@@ -66,52 +66,27 @@ class CreateNewExpenses : Fragment(){
         //pakai unix timestamp
 
         binding.btnAddExpense.setOnClickListener {
-            var nominal = binding.txtNominal.text.toString().toInt()
-            var notes = binding.txtNotes.text.toString()
-
-            //pengecekan backstack smua hrs di view model?!
-            //buat objek expense
-            //uuidnya ambil dari sharedPreferences
-            var expense = Expense(uuid,selectedBudget.idBudget,timestamp,nominal,notes)
-
-            //masukin ke dalam list >> yang dimasukin berupa list
-            //krn kita pake vararg
-            viewModel.addExpense(expense,sisa_uang) //kirim param expense dan sisa uang
-            /*setelah add expense ini dilakukan pengecekan di view model,
-            baru nanti di observe hasilnya gimana TT >> MAMA PUSING
-
-
-            Toast.makeText(context,"New Expense Created!",Toast.LENGTH_SHORT).show()
-            balikin ke page sebelumnya otomatis
-            Navigation.findNavController(it).popBackStack()
-            cek apakah sisa uang > nominal, jika ya baru toast
-           if(nominal>=sisa_uang){
-
+            var nominal=0;
+            //pengecekan
+            if(binding.txtNominal.text?.isNotBlank() == true){
+                nominal = binding.txtNominal.text.toString().toInt()
+            }
+            if(binding.txtNotes.text?.isNotBlank() ==true &&
+                nominal>0 &&
+                listBudget.count()>0){
+                var notes = binding.txtNotes.text.toString()
+                //pengecekan backstack smua hrs di view model?!
+                //buat objek expense
+                //uuidnya ambil dari sharedPreferences
+                var expense = Expense(uuid,selectedBudget.idBudget,timestamp,nominal,notes)
+                //masukin ke dalam list >> yang dimasukin berupa list
+                //krn kita pake vararg
+                viewModel.addExpense(expense,sisa_uang) //kirim param expense dan sisa uang
             }
             else{
-                Toast.makeText(context,"Sorry, your budget isn't enough for this expense!",Toast.LENGTH_SHORT).show()
-            }*/
-           //Log.d("NOMINAL",selectedBudget.idBudget.toString())
+                Toast.makeText(context,"Isi semua kolom! Nominal tidak boleh negatif!",Toast.LENGTH_SHORT).show()
+            }
         }
-        /*val currentDate = Date()
-        //ambil data tanggal sesuai hari ini, pake ID biar dia namanya mei :) not may
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-        binding.txtTanggal.text = dateFormat.format(currentDate)
-        //set pengeluaran skrg brp >> ambil dari db
-        binding.txtTotalExpense.text = "Rp." + totalExpense.toString()
-        binding.txtTotalBudget.text = "Rp."+totalBudget.toString()
-
-        //set buat progress bar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.expenseProgress.min= 0 //set biar dia minimum progressnya 0
-            //hrs cek SDK krn fitur ini bru bisa di minimal sdk 26 :)
-        };
-        binding.expenseProgress.max = totalBudget; //maxnya total budget
-        binding.expenseProgress.progress=totalExpense //buat progressnya gimana
-
-        //hitung selisih antara min dan max >> harusnya di vm??
-        binding.textInputLayout.hint = "Nominal (IDR "+(totalBudget-totalExpense).toString()+" left)";*/
-
         binding.budgetType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedBudget = listBudget[position]
