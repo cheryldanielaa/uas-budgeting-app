@@ -69,7 +69,7 @@ class CreateNewExpenses : Fragment(){
             var nominal=0;
             //pengecekan
             if(binding.txtNominal.text?.isNotBlank() == true){
-                nominal = binding.txtNominal.text.toString().toInt()
+                nominal = binding.txtNominal.text.toString().toIntOrNull() ?: 0
             }
             if(binding.txtNotes.text?.isNotBlank() ==true &&
                 nominal>0 &&

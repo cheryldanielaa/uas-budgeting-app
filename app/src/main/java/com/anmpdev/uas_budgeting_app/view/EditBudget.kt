@@ -57,9 +57,8 @@ class EditBudget : Fragment() {
         binding.btnEditBudget.setOnClickListener {
             var nominal=0; //counter
             val namaBudget =binding.txtBudgetName.text.toString()
-            val txtNominal =binding.txtNominal.text.toString()
-            if(txtNominal.isNotBlank()){
-                nominal=txtNominal.toInt()
+            if(binding.txtNominal.text?.isNotBlank()==true){
+                nominal=binding.txtNominal.text.toString().toIntOrNull() ?: 0
             }
             //lakuin pengecekan biar gak error
             if(namaBudget.isNotBlank() && nominal>0) {

@@ -40,7 +40,7 @@ class AddBudget : Fragment() {
             val namaBudget =binding.txtBudgetName.text.toString()
             val txtNominal = binding.txtNominal.text.toString()
             if(txtNominal.isNotBlank()){
-                nominal=txtNominal.toInt()
+                nominal=txtNominal.toString().toIntOrNull() ?: 0
             }
             if(nominal>0&& namaBudget.isNotBlank()){
                 var budgetBaru = Budget(uuid, namaBudget, nominal)
