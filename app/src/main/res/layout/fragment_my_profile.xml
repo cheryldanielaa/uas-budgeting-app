@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
-            android:text="@{name.fname}"
+            android:text='@{"Hey, " + name.fname + " " + name.lname + "!"}'
             android:textColor="@color/md_theme_primaryFixed_highContrast"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
