@@ -57,10 +57,12 @@ class ListReportFragment : Fragment() {
                 binding.recViewReport.visibility = View.GONE
                 binding.txtError.text = "No report data found"
                 binding.txtError.visibility = View.VISIBLE
-            } else {
+            }
+            else {
                 binding.recViewReport.visibility = View.VISIBLE
                 binding.txtError.visibility = View.GONE
-                //hitung total dari tiap card
+
+                //hitung totalUsed & totalBudget dari tiap expense buat ditampilin di txtTotal
                 val totalUsed = it.sumOf { it.used ?: 0 }
                 val totalBudget = it.sumOf { it.nominal }
 

@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.anmpdev.uas_budgeting_app.R
 import com.anmpdev.uas_budgeting_app.databinding.ActivityMainBinding
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         navController = (supportFragmentManager.findFragmentById(R.id.fragmentHost) as NavHostFragment).navController
         //buat koneksi untuk menghubungkan fragment dengan bottom nav
         binding.bottomNav.setupWithNavController(navController)
+
         val sharedPreferences = getSharedPreferences("SETTING", Context.MODE_PRIVATE)
         val loginState = sharedPreferences.getBoolean("LOGIN_STATE", false)
 
@@ -35,8 +37,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        changeIconFromAdd() //pastiin panggil handlingnya disini
+        changeIconFromAdd()
     }
+
     //ini fungsinya biar klo sekarang dia lagi di add expense, maka dia jg
     //navbarnya bakal brubah ke expense jg, soale awalnya dee bakal klo misal lagi di add
     //expense, pinda budget, balik ke expense, dee gabakal nandai expense e krn id e ga kedaftar di
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             R.id.addBudget to R.id.itemBudgeting,
             R.id.editBudget to R.id.itemBudgeting
             )
+
         //buat listenernya
         navController.addOnDestinationChangedListener { _, destination, _ ->
             //cari dulu item yang child ini dari hasil mapping

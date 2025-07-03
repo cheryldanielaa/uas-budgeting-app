@@ -27,13 +27,6 @@ class UserViewModel (application: Application) :
         }
     }
 
-    fun getUser(username: String) {
-        launch {
-            val db = buildDb(getApplication())
-            userLD.postValue(db.userDao().getUserByUsername(username))
-        }
-    }
-
     fun changePassword(username: String, oldPassword: String, newPassword: String) {
         launch {
             val db = buildDb(getApplication())

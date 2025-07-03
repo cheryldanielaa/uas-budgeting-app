@@ -14,15 +14,12 @@ import java.util.Date
 import java.util.Locale
 
 //terima parameter berupa list expense
-class ListExpenseAdapter(val expenseList:ArrayList<Expense>,
-    val budgetList:ArrayList<Budget>):
-RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
-    //ini mksdnya adalah buat ui dari cardnya sesuai sama expense card binding
+class ListExpenseAdapter(val expenseList:ArrayList<Expense>, val budgetList:ArrayList<Budget>): RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
+
     class ListExpenseViewHolder(var binding:ExpenseCardBinding):
             RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListExpenseViewHolder {
-       //atur binding disini
         var binding = ExpenseCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ListExpenseViewHolder(binding)
     }
@@ -35,25 +32,24 @@ RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>(){
         //tampung value dari tanggal yang dibaca disini
         //unix timestamp pake current time millis jadi hrs dikali 1000
         val timestamp = expenseList[position].tanggal
-        //convert ke tanggal biasa disini
+
+        //convert ke tanggal biasa
         val tanggal = Date(timestamp)
         //hh:mm a >> biar formatnya am pm, trs hh itu buat format 12 hour, klo HH format 24 hour
-        //locale id biar pake bahasa indo formatnya
         val dateFormat = SimpleDateFormat("dd MMMM yyyy hh:mm a",  Locale("id", "ID"))
         val str_tanggal = dateFormat.format(tanggal)
-        //atur apa yang terjadi di tiap card disini
-        holder.binding.txtTanggal.text=str_tanggal.toString()
-        //buat format penulisan angka (currency)
+
+        holder.binding.txtTanggal.text = str_tanggal.toString()
         val formatCurrency = NumberFormat.getInstance(Locale("id","ID"))
         formatCurrency.maximumFractionDigits = 0  //biar tdk ada desimal di belakangnya jadi gak ada kayak 1.000,00
-        val nominal = expenseList[position].nominal
-        holder.binding.txtHarga.text = "IDR ${formatCurrency.format(nominal)}" //ubah ke format Rp
 
-        //klo misal klik harganya
+        val nominal = expenseList[position].nominal
+        holder.binding.txtHarga.text = "IDR ${formatCurrency.format(nominal)}"
+
         holder.binding.txtHarga.setOnClickListener {
             //klo diklik btn kategorinya auto kebuka navnya
             val action = ListExpensesFragmentDirections.actionDetailExpenses(expenseList[position].idExpense)
-            Navigation.findNavController(it).navigate(action) //pergila ke action itu
+            Navigation.findNavController(it).navigate(action)
         }
 
         //cari objek dimana idbudget dr budget list = idbugdet di expense list

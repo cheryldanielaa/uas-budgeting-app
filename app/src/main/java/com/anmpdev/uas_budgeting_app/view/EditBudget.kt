@@ -27,7 +27,6 @@ class EditBudget : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding= FragmentEditBudgetBinding.inflate (layoutInflater ,container, false)
         return binding.root
     }
@@ -36,42 +35,45 @@ class EditBudget : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
         val uuid = sharedPreferences.getInt("user_id", 0) //kasih default valuenya 0
+
         viewModelBudget = ViewModelProvider(this).get(BudgetViewModel::class.java)
         viewModelExpense = ViewModelProvider(this).get(CreateExpenseViewModel::class.java)
+
         //baca id dr argument yang diikirim dari navigation
         val idBudget = EditBudgetArgs.fromBundle(requireArguments()).idBudget
 
         viewModelBudget.selectABudget(idBudget)
+
         viewModelBudget.budgetData.observe(viewLifecycleOwner) { value ->
             binding.txtBudgetName.setText(value.budget_name.toString())
             binding.txtNominal.setText(value.nominal.toString())
         }
+
         //Panggil fetch nominal buat dapetin total expenseskrng, idinya diisi id budget
         viewModelExpense.fetchNominal(idBudget)
         var totalPengeluaran = 0
 
-        //observe salah satu return yaitu total pengeluaran, simpan di var global
         viewModelExpense.totalPengeluaran.observe(viewLifecycleOwner) { value ->
             totalPengeluaran = value
         }
+
         binding.btnEditBudget.setOnClickListener {
-            var nominal=0; //counter
-            val namaBudget =binding.txtBudgetName.text.toString()
-            if(binding.txtNominal.text?.isNotBlank()==true){
-                nominal=binding.txtNominal.text.toString().toIntOrNull() ?: 0
+            var nominal = 0;
+            val namaBudget = binding.txtBudgetName.text.toString()
+
+            if(binding.txtNominal.text?.isNotBlank() == true){
+                nominal = binding.txtNominal.text.toString().toIntOrNull() ?: 0
             }
+
             //lakuin pengecekan biar gak error
             if(namaBudget.isNotBlank() && nominal>0) {
                 //cek dulu apakah expense lebih kecil dr budget baru, ya maka
                 if (totalPengeluaran <= nominal) {
                     viewModelBudget.editBudget(namaBudget, nominal, idBudget)
                     Navigation.findNavController(requireView()).popBackStack()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Nominal tidak boleh lebih kecil dari $totalPengeluaran",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                }
+                else {
+                    Toast.makeText(context, "Nominal tidak boleh lebih kecil dari $totalPengeluaran", Toast.LENGTH_SHORT).show()
                 }
             }
             else{

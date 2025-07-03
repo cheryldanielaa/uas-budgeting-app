@@ -33,16 +33,17 @@ class AddBudget : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
         val uuid = sharedPreferences.getInt("user_id", 0) //kasih default valuenya 0
+
         viewModel = ViewModelProvider(this).get(BudgetViewModel::class.java)
 
         binding.btnAddBudget.setOnClickListener {
-            var nominal=0
+            var nominal = 0
             val namaBudget =binding.txtBudgetName.text.toString()
             val txtNominal = binding.txtNominal.text.toString()
             if(txtNominal.isNotBlank()){
                 nominal=txtNominal.toString().toIntOrNull() ?: 0
             }
-            if(nominal>0&& namaBudget.isNotBlank()){
+            if(nominal > 0&& namaBudget.isNotBlank()){
                 var budgetBaru = Budget(uuid, namaBudget, nominal)
                 viewModel.insertBudget(budgetBaru)
                 Navigation.findNavController(requireView()).popBackStack()
@@ -50,12 +51,6 @@ class AddBudget : Fragment() {
             else{
                 Toast.makeText(context, "Budget harus diisi dan nominal tidak boleh bernilai negatif", Toast.LENGTH_SHORT).show()
             }
-
         }
-
-
     }
-
-
-
 }

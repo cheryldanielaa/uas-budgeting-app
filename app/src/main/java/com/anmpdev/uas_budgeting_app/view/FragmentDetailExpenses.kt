@@ -20,49 +20,56 @@ import java.util.Locale
 
 class DialogFragment : DialogFragment() {
     private lateinit var binding:DialogCardBinding
-    private lateinit var viewModel:ListExpenseViewModel //method fetch disini
+    private lateinit var viewModel:ListExpenseViewModel
     private lateinit var vmBudget:BudgetViewModel
-    private var idBudget:Int=0; //set initial valuenya
+    private var idBudget:Int = 0;
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DialogCardBinding.inflate(layoutInflater,container,false)
+
         //ambil id dari bundle
         //dialog fragment args itu mksdnya adalah dialogfragment tu fragment skrg
         val idExpenses = DialogFragmentArgs.fromBundle(requireArguments()).idExpense
+
         viewModel = ViewModelProvider(this).get(ListExpenseViewModel::class.java)
         vmBudget = ViewModelProvider(this).get(BudgetViewModel::class.java)
+        
         viewModel.fetch(idExpenses) //ambil data id expense tertentu
+
         observeViewModel()
 
         //jika diklik maka close
         binding.btnClose.setOnClickListener {
-            dismiss() //tutup
+            dismiss()
         }
         return binding.root
     }
     fun observeViewModel(){
         viewModel.expenseData.observe(viewLifecycleOwner, Observer {
             idBudget = it.idBudget //set disini
-            Log.d("ID_BUDGET",idBudget.toString())
-            vmBudget.selectABudget(idBudget) //jalnin baca disini
-            //baca data dari hasil fetching
+//            Log.d("ID_BUDGET",idBudget.toString())
+
+            vmBudget.selectABudget(idBudget)
+
             val timestamp = it.tanggal
             //convert ke tgl biasa
             val tanggal = Date(timestamp)
             //ubah ke format hh:mm a >> contoh 12 mei 2025 10.15 am
             val dateFormat = SimpleDateFormat("dd MMMM yyyy hh:mm a",  Locale("id", "ID"))
             val str_tanggal = dateFormat.format(tanggal)
+
             //tampilin tanggal
             binding.txtTanggal.text = str_tanggal
             binding.txtNotes.text=it.notes
+
             //tampilin nominal pengeluaran
             val formatCurrency = NumberFormat.getInstance(Locale("id","ID"))
             formatCurrency.maximumFractionDigits = 0  //biar tdk ada desimal di belakangnya jadi gak ada kayak 1.000,00
             val nominal = it.nominal
+
             binding.txtHarga.text = "IDR ${formatCurrency.format(nominal)}"
-            /*ini budget namenya sementara dummy!!
-            binding.txtBudgetName.text="Rumah Tangga"*/
         });
 
         //panggil view model dari budget untuk baca nama dari budget dgn

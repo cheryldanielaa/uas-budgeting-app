@@ -14,17 +14,14 @@ import kotlin.coroutines.CoroutineContext
 
 class ReportViewModel (application: Application): AndroidViewModel(application), CoroutineScope {
     private var job = Job()
+    val reportLD = MutableLiveData<List<Report>>() //utk nampung list report
+    val reportLoadErrorLD = MutableLiveData<Boolean>() //utk cek apakah ada error waktu load data
+    val loadingLD = MutableLiveData<Boolean>() //buat cek status msi load atau gak
+
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    val reportLD = MutableLiveData<List<Report>>() //utk nampung list expense
-    //utk cek apakah ada error waktu load data
-    val reportLoadErrorLD = MutableLiveData<Boolean>()
-    val loadingLD = MutableLiveData<Boolean>() //buat cek status msi load atau gak
-
-    //terima id dari user tsb
     fun refresh(uuid:Int){
-        //function utk refresh data
         loadingLD.value = true //pertama kali refresh pasti statusnya true
         reportLoadErrorLD.value = false
         launch {

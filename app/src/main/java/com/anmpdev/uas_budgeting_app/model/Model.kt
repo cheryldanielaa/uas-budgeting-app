@@ -59,6 +59,7 @@ data class Expense(
     var idExpense:Int=0 //dimisalkan idnya 0
 }
 
+//buat class report buat maping variabel hasil query select nanti, tapi bukan berupa entity
 data class Report(
     val name: String,
     val nominal: Int,

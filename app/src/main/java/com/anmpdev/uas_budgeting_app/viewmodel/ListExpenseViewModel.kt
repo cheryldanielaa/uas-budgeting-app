@@ -12,44 +12,33 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class ListExpenseViewModel(application: Application):
-    AndroidViewModel(application), CoroutineScope{
-    //ini buat klo pake coroutine scope
-    //nanti bljr lagi pala saya puyeng TT
+class ListExpenseViewModel(application: Application): AndroidViewModel(application), CoroutineScope{
+
     private var job = Job()
+    val expenseLD = MutableLiveData<List<Expense>>() //utk nampung list expense
+    val expenseLoadErrorLD =MutableLiveData<Boolean>()  //utk cek apakah ada error waktu load data
+    val loadingLD = MutableLiveData<Boolean>() //buat cek status msi load atau gak
+    val expenseData = MutableLiveData<Expense>() //single object buat return hasil fetching
+
     override val coroutineContext: CoroutineContext
         get()=job + Dispatchers.IO
 
-    val expenseLD = MutableLiveData<List<Expense>>() //utk nampung list expense
-    //utk cek apakah ada error waktu load data
-    val expenseLoadErrorLD =MutableLiveData<Boolean>()
-    val loadingLD = MutableLiveData<Boolean>() //buat cek status msi load atau gak
-
-    //terima id dari user tsb
-    fun refresh(uuid:Int){
+    fun refresh(uuid:Int) {
         //function utk refresh data
         loadingLD.value = true //pertama kali refresh pasti statusnya true
         expenseLoadErrorLD.value = false
         launch {
             val db = buildDb(getApplication())
             //code dibawah buat ambil semua data dr database
-            //ini mksdnya value dr expense diisi dgn hasil query
-            //ini sementara uuidnya pake dummy >> nanti diganti dr hasil sharedpreferences
             expenseLD.postValue(db.ExpenseDao().selectAllExpense(uuid))
-            loadingLD.postValue(false) //set utk loadingnya false krn sudah stop
+            loadingLD.postValue(false)
         }
     }
-    //single object buat return hasil fetching
-    val expenseData = MutableLiveData<Expense>()
-    //id expense itu parameter expensenya buat ambil datanya
-    //ditampilin di popup
+
     fun fetch(id:Int){
         launch {
             val db = buildDb(getApplication())
-            //select to do fungsinya buat ambil single to-do
-            //dan return function tsb
             expenseData.postValue(db.ExpenseDao().selectExpense(id))
-           // Log.d("NOMINAL",db.ExpenseDao().selectExpense(id).toString())
         }
     }
 }

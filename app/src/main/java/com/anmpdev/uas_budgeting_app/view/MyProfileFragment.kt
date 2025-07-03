@@ -32,7 +32,6 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
     private lateinit var viewModel: UserViewModel
     private lateinit var username: String
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,16 +45,6 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
         sharedPreferences = requireActivity().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
         binding.handler = this
         viewModel = ViewModelProvider(this)[UserViewModel::class.java]
-
-//        binding.btnLogOut.setOnClickListener {
-//            val editor = sharedPreferences.edit()
-//            editor.putBoolean("LOGIN_STATE", false)
-//            editor.apply()
-//
-//            val intent = Intent(requireActivity(), MainActivity::class.java)
-//            startActivity(intent)
-//            requireActivity().finish()
-//        }
 
         sharedPreferences = requireActivity().getSharedPreferences("SETTING", Context.MODE_PRIVATE)
         username = sharedPreferences.getString("user_username", "") ?: ""
@@ -76,7 +65,6 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
-
     }
 
     override fun onSignOutClick(v: View) {
@@ -88,13 +76,6 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
     override fun onChangePasswordClick(v: View) {
         val oldPassword = binding.txtOldPassword.text.toString()
         val newPassword = binding.txtNewPassword.text.toString()
-        val repeatPassword = binding.txtRepeatPassword.text.toString()
-
-//        if (newPassword != repeatPassword) {
-//            binding.repeatPasswordInputLayout.error = "Password do not match"
-//            return
-//        }
-
 
         viewModel.changePassword(username, oldPassword, newPassword)
         viewModel.changeSuccess.observe(viewLifecycleOwner, Observer {
@@ -105,9 +86,6 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
                 Toast.makeText(requireContext(), "Password changed!", Toast.LENGTH_SHORT).show()
             }
         })
-
-
-
     }
 
     override fun loadUserData() {
@@ -116,5 +94,4 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
             binding.name = it
         })
     }
-
 }

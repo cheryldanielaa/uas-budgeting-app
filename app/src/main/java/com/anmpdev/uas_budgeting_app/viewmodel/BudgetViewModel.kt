@@ -11,16 +11,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class BudgetViewModel (application: Application)
-    : AndroidViewModel(application), CoroutineScope {
+class BudgetViewModel (application: Application) : AndroidViewModel(application), CoroutineScope {
     private val job= Job()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.IO
-
     val budgetLD = MutableLiveData<List<Budget>>()
     val budgetLoadErrorLD =MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
     val budgetData = MutableLiveData<Budget>()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 
     fun readBudget(uuid:Int){
         launch{
@@ -35,6 +34,7 @@ class BudgetViewModel (application: Application)
             db.BudgetDao().insertAll(budget)
         }
     }
+
     fun selectABudget(id:Int){
         launch{
             val db = buildDb(getApplication())
@@ -59,14 +59,4 @@ class BudgetViewModel (application: Application)
             loadingLD.postValue(false)
         }
     }
-
-    fun fetch(id:Int){
-        launch {
-            val db = buildDb(getApplication())
-            budgetData.postValue(db.BudgetDao().selectNameBudget(id))
-
-        }
-    }
-
-
 }

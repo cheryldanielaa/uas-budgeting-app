@@ -9,8 +9,7 @@ import com.anmpdev.uas_budgeting_app.model.Report
 import java.text.NumberFormat
 import java.util.Locale
 
-class ListReportAdapter (val reportList: ArrayList<Report>) :
-    RecyclerView.Adapter<ListReportAdapter.ReportViewHolder>() {
+class ListReportAdapter (val reportList: ArrayList<Report>) : RecyclerView.Adapter<ListReportAdapter.ReportViewHolder>() {
 
     class ReportViewHolder(var binding: ReportCardBinding) : RecyclerView.ViewHolder(binding.root)
 

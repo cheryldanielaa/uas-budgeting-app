@@ -30,10 +30,13 @@ class ListBudgetingAdapter(val budgetList:ArrayList<Budget>):
 
     override fun onBindViewHolder(holder: ListBudgetViewHolder, position: Int) {
         holder.binding.txtName.text=budgetList[position].budget_name
+
         val formatCurrency = NumberFormat.getInstance(Locale("id","ID"))
         formatCurrency.maximumFractionDigits = 0
+
         val nominal = budgetList[position].nominal
         holder.binding.txtNominal.text = "IDR ${formatCurrency.format(nominal)}"
+
         //klo misal klik harganya
         holder.binding.txtName.setOnClickListener {
             val action = ListBudgetingFragmentDirections.actionToEditBudget(budgetList[position].idBudget)
@@ -46,5 +49,4 @@ class ListBudgetingAdapter(val budgetList:ArrayList<Budget>):
         budgetList.addAll(newListBudget)
         notifyDataSetChanged()
     }
-
 }

@@ -39,8 +39,9 @@ class ListBudgetingFragment : Fragment() {
         val uuid = sharedPreferences.getInt("user_id", 0)
         viewModel = ViewModelProvider(this).get(BudgetViewModel::class.java)
         viewModel.refresh(uuid) //kalau refresh itu untuk loadError juga
-        binding.recView.layoutManager=LinearLayoutManager(context)
+        binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = budgetListadapter
+
         //klo misal diklik fabnya, maka dia akan pindah ke create expense (fragment)
         binding.btnAddBudget.setOnClickListener {
             //arahkan ke fragment tsb pke navigation
@@ -60,9 +61,9 @@ class ListBudgetingFragment : Fragment() {
             }
             else{
                 binding.recView?.visibility = View.VISIBLE
-                //Log.d("DB_CHECK",it.toString())
             }
         })
+
         //atur loading ld
         viewModel.loadingLD.observe(viewLifecycleOwner,Observer{
             if(it==false){
@@ -72,6 +73,7 @@ class ListBudgetingFragment : Fragment() {
                 binding.progressLoad.visibility = View.VISIBLE
             }
         })
+
         //atur error ldnya
         viewModel.budgetLoadErrorLD.observe(viewLifecycleOwner,Observer{
             if(it==false){

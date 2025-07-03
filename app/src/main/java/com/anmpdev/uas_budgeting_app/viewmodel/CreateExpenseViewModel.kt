@@ -13,46 +13,43 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class CreateExpenseViewModel(application: Application)
-    : AndroidViewModel(application), CoroutineScope {
+class CreateExpenseViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
     private val job=Job()
+    //tampung total pengeluaran utk idbudget tertentu
+    val totalPengeluaran = MutableLiveData<Int>()
+    val sisaUang = MutableLiveData<Int?>()
+    val statusInsert=MutableLiveData<Boolean>();
+
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    //ini fungsinya utk menambahkan expense baru
     fun addExpense(expense: Expense, sisa_uang:Int){
         launch {
             val db = buildDb(getApplication());
-            //jika nominal yang diinput >= sisa uang, maka insert
-            //jika tdk exception
-            if(expense.nominal<=sisa_uang){
+
+            //hanya bisa diinsert jika nominal yang diinput >= sisa uang
+            if(expense.nominal <= sisa_uang){
                 statusInsert.postValue(true)
                 db.ExpenseDao().insertAll(expense)
             }
             else{
-                //kirim gagal klo gak memenuhi
                 statusInsert.postValue(false)
             }
         }
     }
-    //tampung total pengeluaran utk idbudget tertentu
-    val totalPengeluaran = MutableLiveData<Int>()
-    //nanti direturn postvavlue disini sekaliaaann TT
-    val sisaUang = MutableLiveData<Int?>()
-    val statusInsert=MutableLiveData<Boolean>(); //true or false
+
     fun fetchNominal(id:Int){
         launch {
             val db = buildDb(getApplication())
             //klo dia blm ada, maka datanya 0 expensenya
             val nominalPengeluaran = db.ExpenseDao().selectNominalBudget(id)?: 0
             totalPengeluaran.postValue(nominalPengeluaran)
-            //lakukan perhitungan disinii
+
+            //hitung sisa uang per budget
             val budget = db.BudgetDao().selectNameBudget(id)?.nominal
+            //hitung selisih nominal budget dengan nominal pengeluaran budget itu
             val sisa_uang = budget?.minus(nominalPengeluaran)
-            //kirim value
             sisaUang.postValue(sisa_uang)
-            //buat debugging
-            //Log.d("NOMINAL",nominalPengeluaran.toString())
         }
     }
 }
