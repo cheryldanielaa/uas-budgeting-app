@@ -65,6 +65,7 @@ class SignInFragment : Fragment() {
                 editor.putBoolean("LOGIN_STATE", true)
                 editor.putInt("user_id", user.uuid)
                 editor.putString("user_full_name", "${user.fname} ${user.lname}")
+                editor.putString("user_username", user.username)
                 editor.apply()
 
                 Toast.makeText(requireContext(), "Login Successful", Toast.LENGTH_SHORT).show()

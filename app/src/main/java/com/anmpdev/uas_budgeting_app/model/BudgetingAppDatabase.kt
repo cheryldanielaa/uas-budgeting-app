@@ -12,6 +12,7 @@ abstract class BudgetingAppDatabase:RoomDatabase(){
     abstract fun userDao():UserDao
     abstract fun BudgetDao():BudgetDao
     abstract fun ExpenseDao():ExpenseDao
+
     companion object{
         //buat singleton object untuk menjamin hanya ada 1 objek
         @Volatile private var instance:BudgetingAppDatabase?=null
