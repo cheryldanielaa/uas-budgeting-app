@@ -60,7 +60,7 @@ class ListReportFragment : Fragment() {
             } else {
                 binding.recViewReport.visibility = View.VISIBLE
                 binding.txtError.visibility = View.GONE
-
+                //hitung total dari tiap card
                 val totalUsed = it.sumOf { it.used ?: 0 }
                 val totalBudget = it.sumOf { it.nominal }
 

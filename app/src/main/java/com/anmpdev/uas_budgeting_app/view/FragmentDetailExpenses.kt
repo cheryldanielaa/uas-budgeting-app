@@ -19,15 +19,14 @@ import java.util.Date
 import java.util.Locale
 
 class DialogFragment : DialogFragment() {
-    private  var _binding: DialogCardBinding?=null
-    private val binding get()=_binding!! //binding itu equeals to _binding
+    private lateinit var binding:DialogCardBinding
     private lateinit var viewModel:ListExpenseViewModel //method fetch disini
     private lateinit var vmBudget:BudgetViewModel
     private var idBudget:Int=0; //set initial valuenya
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = DialogCardBinding.inflate(layoutInflater,container,false)
+        binding = DialogCardBinding.inflate(layoutInflater,container,false)
         //ambil id dari bundle
         //dialog fragment args itu mksdnya adalah dialogfragment tu fragment skrg
         val idExpenses = DialogFragmentArgs.fromBundle(requireArguments()).idExpense
@@ -42,13 +41,6 @@ class DialogFragment : DialogFragment() {
         }
         return binding.root
     }
-    //harus dioverride on destroy view
-    //karena bs jadi dialog fragment hidup lebih lama dr viewnya
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding=null
-    }
-
     fun observeViewModel(){
         viewModel.expenseData.observe(viewLifecycleOwner, Observer {
             idBudget = it.idBudget //set disini
