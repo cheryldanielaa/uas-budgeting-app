@@ -62,6 +62,21 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
         Log.d("usernameBapakmu" , username)
         loadUserData()
 
+        binding.txtRepeatPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newPassword = binding.txtNewPassword.text.toString()
+                val repeatPassword = binding.txtRepeatPassword.text.toString()
+
+                if (repeatPassword != newPassword) {
+                    binding.repeatPasswordInputLayout.error = "Passwords do not match"
+                } else {
+                    binding.repeatPasswordInputLayout.error = null
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
     }
 
     override fun onSignOutClick(v: View) {
@@ -79,17 +94,7 @@ class MyProfileFragment : Fragment(), ProfileActionListener {
 //            binding.repeatPasswordInputLayout.error = "Password do not match"
 //            return
 //        }
-        binding.txtRepeatPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (repeatPassword != newPassword) {
-                    binding.repeatPasswordInputLayout.error = "Passwords do not match"
-                } else {
-                    binding.repeatPasswordInputLayout.error = null
-                }
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
+
 
         viewModel.changePassword(username, oldPassword, newPassword)
         viewModel.changeSuccess.observe(viewLifecycleOwner, Observer {
